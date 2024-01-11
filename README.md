@@ -12,7 +12,9 @@ WeatherWave is a web application that allows users to fetch weather data using t
 - HTML
 - CSS
 - JavaScript
-  
+
+ ## ScreenShot 
+![Website Preview](/Screenshot/London.png)
 ## Getting Started
 
 1. Clone the repository:
