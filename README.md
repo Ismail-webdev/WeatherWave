@@ -13,7 +13,7 @@ WeatherWave is a web application that allows users to fetch weather data using t
 - CSS
 - JavaScript
 
-[Live Website Preview](https://weather-wave-ismailali.vercel.app/)
+<iframe src="https://weather-wave-ismailali.vercel.app/" width="600" height="400"></iframe>
 ## Getting Started
 
 1. Clone the repository:
