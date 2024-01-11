@@ -72,12 +72,15 @@ search.addEventListener('click', () => {
             console.error('Error fetching weather data:', error);
         });
 })
-async function getPopularWeatherData() {
-    try {
-        const popularResponse = await fetch(`http://api.openweathermap.org/data/2.5/group?id=524901,703448,2643743,1850144&units=metric&appid=${apiKey}`);
-        const popularData = await popularResponse.json();
-        // console.log(popularData);
-        document.querySelector(".popular-destination .row").innerHTML = `<div class="weather-card first">
+function getPopularWeatherData() {
+    const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+
+    fetch(`http://api.openweathermap.org/data/2.5/group?id=524901,703448,2643743,1850144&units=metric&appid=${apiKey}`)
+        .then(function (popularResponse) {
+            return popularResponse.json();
+        })
+        .then(function (popularData) {
+            document.querySelector(".popular-destination .row").innerHTML =`<div class="weather-card first">
         <div class="icon"><img src=""></div>
         <div class="location">${popularData.list[0].name},${popularData.list[0].sys.country}</div>
         <div class="temperature">${parseInt(popularData.list[0].main.temp)}°C</div>
@@ -117,56 +120,58 @@ async function getPopularWeatherData() {
             <div class="wind">Wind: ${popularData.list[3].wind.speed} km/h</div>
         </div>
         </div>
-        `
-        const firstImg = document.querySelector(".first .icon img");
-        const secondImg = document.querySelector(".second .icon img");
-        const thirdImg = document.querySelector(".third .icon img");
-        const fourthImg = document.querySelector(".fourth .icon img");
-        for (let i = 0; i < 4; i++) {
-            const currentCondition = popularData.list[i].weather[0].main;
+            `;
 
-            let currentImg;
+            const firstImg = document.querySelector(".first .icon img");
+            const secondImg = document.querySelector(".second .icon img");
+            const thirdImg = document.querySelector(".third .icon img");
+            const fourthImg = document.querySelector(".fourth .icon img");
 
-            switch (i) {
-                case 0:
-                    currentImg = firstImg;
-                    break;
-                case 1:
-                    currentImg = secondImg;
-                    break;
-                case 2:
-                    currentImg = thirdImg;
-                    break;
-                case 3:
-                    currentImg = fourthImg;
-                    break;
-                default:
-                    break;
+            for (let i = 0; i < 4; i++) {
+                const currentCondition = popularData.list[i].weather[0].main;
+                let currentImg;
+
+                switch (i) {
+                    case 0:
+                        currentImg = firstImg;
+                        break;
+                    case 1:
+                        currentImg = secondImg;
+                        break;
+                    case 2:
+                        currentImg = thirdImg;
+                        break;
+                    case 3:
+                        currentImg = fourthImg;
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (currentCondition) {
+                    case "Rain":
+                        currentImg.src = "img/rain.png";
+                        break;
+                    case "Clouds":
+                        currentImg.src = "img/cloud.png";
+                        break;
+                    case "Clear":
+                        currentImg.src = "img/clear.png";
+                        break;
+                    case 'Haze':
+                        currentImg.src = "img/mist.png";
+                        break;
+                    case 'Snow':
+                        currentImg.src = "img/snow.png";
+                        break;
+                    default:
+                        currentImg.src = "";
+                        break;
+                }
             }
-            switch (currentCondition) {
-                case "Rain":
-                    currentImg.src = "img/rain.png";
-                    break;
-                case "Clouds":
-                    currentImg.src = "img/cloud.png";
-                    break;
-                case "Clear":
-                    currentImg.src = "img/clear.png";
-                    break;
-                case 'Haze':
-                    currentImg.src = "img/mist.png";
-                    break;
-                case 'Snow':
-                    currentImg.src = "img/snow.png";
-                    break;
-                default:
-                    currentImg.src = "";
-                    break;
-            }
-        }
-    }
-    catch (error) {
-        console.error(error);
-    }
+        })
+        .catch(function (error) {
+            console.error('Error fetching weather data:', error);
+        });
 }
 getPopularWeatherData();
